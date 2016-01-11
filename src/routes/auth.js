@@ -7,7 +7,12 @@
 
 const router = require('express').Router();
 
-router.post('/auth', function(req, res) {
+
+const validacao = (req, res, next) => {
+    
+};
+
+router.post('/auth', validacao, (req, res) => {
     res.send('autenticação');
 });
 

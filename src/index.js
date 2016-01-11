@@ -10,6 +10,8 @@ const mysql = require('mysql');
 const jwt = require('jwt-simple'); 
 const app = express();
 
+const validator = require('validator');
+
 const middleware = require('./config/middleware.js');
 const auth = require('./routes/auth.js');
 
