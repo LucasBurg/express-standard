@@ -1,0 +1,25 @@
+{
+  "name": "express-standard",
+  "version": "1.0.0",
+  "description": "Standard Applications for Express (express.js)",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasBurg/express-standard.git"
+  },
+  "author": "Lucas Burg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LucasBurg/express-standard/issues"
+  },
+  "homepage": "https://github.com/LucasBurg/express-standard#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "jwt-simple": "^0.4.0",
+    "mysql": "^2.10.0"
+  }
+}
