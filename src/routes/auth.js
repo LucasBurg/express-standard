@@ -9,8 +9,8 @@ const router = require('express').Router();
 
 const validacao = require('../modules/auth/validation.js');
 
-router.post('/auth', validacao, (req, res) => {
-    res.send('autenticação');
-});
+const autenticacao = require('../modules/auth/autentication.js');
+
+router.post('/auth', validacao, autenticacao);
 
 module.exports = router;
