@@ -7,10 +7,7 @@
 
 const router = require('express').Router();
 
-
-const validacao = (req, res, next) => {
-    
-};
+const validacao = require('../modules/auth/validation.js');
 
 router.post('/auth', validacao, (req, res) => {
     res.send('autenticação');
