@@ -1,5 +1,5 @@
 /**
- * Middleware's de configuração dos módulos
+ * Middleware's de configuração dos packages
  */
 
 "use strict";
