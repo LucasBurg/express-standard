@@ -8,7 +8,7 @@
 const router = require('express').Router();
 const validacao = require('../modules/auth/validation.js');
 const autenticacao = require('../modules/auth/autentication.js');
-const token = require('../modules/auth/token.js');
+const token = require('../modules/auth/token-generation.js');
 
 router.post('/auth', validacao, autenticacao, token);
 
