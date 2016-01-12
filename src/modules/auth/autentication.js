@@ -6,13 +6,11 @@
 
 const adapter = require('../adapter/adapter.js');
 
-const bcrypt = require('bcrypt-nodejs');
+const cryptojs = require("crypto-js");
 
 const autentication = (req, res, next) => {
 
     let sql = "select id, senha from usuario where email = ?";
-    
-    //adapter.connect();
     
     adapter.query(sql, [req.body.user],  (err, rows, fields) => {
     
@@ -23,34 +21,24 @@ const autentication = (req, res, next) => {
             
             if (rows[0].id && rows[0].senha) {
                 
-                let senha = rows[0].senha;
-            
-                console.log(req.body.password);
-            
-                bcrypt.compare(req.body.password, senha, (err, result) => {
-                   
-                    console.log(err);
-                   
-                    res.send(result);   
-                });
+                let senhaHash = rows[0].senha;
                 
+                let senhaInput = req.body.password;
                 
+                let hash = cryptojs.SHA512(senhaInput).toString(cryptojs.enc.Hex);
                 
+                if (senhaHash === hash) {
+                    res.send(hash);    
+                } else {
+                    res.status(401).end();
+                }
             } else {
                 res.status(404).end();
             }
-            
-            
-            
-            
-            //res.status(200).json(rows);
         } else {
             res.status(404).end();
         }
-    
     });
-    
-    
 };
 
 module.exports = autentication;
