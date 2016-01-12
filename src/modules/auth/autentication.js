@@ -3,17 +3,8 @@
  */
 "use strict";
 
-
-const conn = require('../conn/conn.js');
-
-const crypto = require("crypto-js");
-
-const compare = (senhaInput, senhaHash, callback) => {
-    let hashInput = crypto.SHA512(senhaInput).toString(crypto.enc.Hex);
-    let status = (senhaHash === hashInput);
-    let token = {token: hashInput};
-    callback(token, status);
-};
+const conn = require('../adapter/conn.js');
+const bcrypt = require('bcryptjs');
 
 const autentication = (req, res, next) => {
     let sql = "select id, senha from usuario where email = ?";
@@ -22,25 +13,18 @@ const autentication = (req, res, next) => {
             console.error(err);
             res.sendStatus(500);    
         } else if (rows[0] !== undefined && rows[0].id !== undefined && rows[0].senha !== undefined) {
-        
-            compare(req.body.password, rows[0].senha, (token, status) => {
-                
-                console.log(status, token);
-                
-                if (status) {
-                    res.send(token);
+            bcrypt.compare(req.body.password, rows[0].senha, (err, result) => {
+                if (result) {
+                    req.body[0] = {id: rows[0].id};
+                    next();
                 } else {
                     res.sendStatus(401);
-                }    
+                }
             });
-        
         } else {
             res.sendStatus(401);
         }
     });
 };
-
-
-
 
 module.exports = autentication;
