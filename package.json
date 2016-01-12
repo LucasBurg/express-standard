@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/LucasBurg/express-standard#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
     "joi": "^7.1.0",
