@@ -5,12 +5,16 @@
 
 const mysql = require('mysql');
 
-const adapter = mysql.createConnection({
+const conn = mysql.createConnection({
     host: 'localhost',
-    database: 'atleta',
+    database: 'teste',
     user: 'root',
     password: '96342292'
 });
 
 
-module.exports = adapter;
+conn.on('error', (err) => {
+  console.error(err);  
+});
+
+module.exports = conn;

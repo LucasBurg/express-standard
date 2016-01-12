@@ -1,5 +1,5 @@
 /**
- * @author Lucas Burg 
+ * Boot da aplicação 
  */
 
 "use strict";
@@ -17,10 +17,6 @@ const auth = require('./routes/auth.js');
 
 app.use(middleware);
 app.use(auth);
-
-app.get('/', function(req, res) {
-    res.send('hello');
-});
 
 app.listen(3000, function() {
    console.log('The Standard Application is running!'); 

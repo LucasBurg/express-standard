@@ -4,41 +4,43 @@
 "use strict";
 
 
-const adapter = require('../adapter/adapter.js');
+const conn = require('../conn/conn.js');
 
-const cryptojs = require("crypto-js");
+const crypto = require("crypto-js");
+
+const compare = (senhaInput, senhaHash, callback) => {
+    let hashInput = crypto.SHA512(senhaInput).toString(crypto.enc.Hex);
+    let status = (senhaHash === hashInput);
+    let token = {token: hashInput};
+    callback(token, status);
+};
 
 const autentication = (req, res, next) => {
-
     let sql = "select id, senha from usuario where email = ?";
-    
-    adapter.query(sql, [req.body.user],  (err, rows, fields) => {
-    
+    conn.query(sql, [req.body.user],  (err, rows, fields) => {
         if (err) {
-            res.status(401).json(err);    
-        } else if (rows) {
-            
-            
-            if (rows[0].id && rows[0].senha) {
+            console.error(err);
+            res.sendStatus(500);    
+        } else if (rows[0] !== undefined && rows[0].id !== undefined && rows[0].senha !== undefined) {
+        
+            compare(req.body.password, rows[0].senha, (token, status) => {
                 
-                let senhaHash = rows[0].senha;
+                console.log(status, token);
                 
-                let senhaInput = req.body.password;
-                
-                let hash = cryptojs.SHA512(senhaInput).toString(cryptojs.enc.Hex);
-                
-                if (senhaHash === hash) {
-                    res.send(hash);    
+                if (status) {
+                    res.send(token);
                 } else {
-                    res.status(401).end();
-                }
-            } else {
-                res.status(404).end();
-            }
+                    res.sendStatus(401);
+                }    
+            });
+        
         } else {
-            res.status(404).end();
+            res.sendStatus(401);
         }
     });
 };
+
+
+
 
 module.exports = autentication;
