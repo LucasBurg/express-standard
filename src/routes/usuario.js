@@ -5,10 +5,10 @@
 "use strict";
 
 const router = require('express').Router();
-const token = require('../modules/auth/token-validation.js');
+const tokenValidation = require('../modules/auth/token-validation.js');
 
 router.route('/usuario')
-.all(token)
+.all(tokenValidation)
 .get((req, res) => {
     res.send('usuario ok');
 });
