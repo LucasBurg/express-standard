@@ -12,7 +12,6 @@ const conn = mysql.createConnection({
     password: '96342292'
 });
 
-
 conn.on('error', (err) => {
   console.error(err);  
 });
