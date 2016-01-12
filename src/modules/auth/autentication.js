@@ -15,7 +15,13 @@ const autentication = (req, res, next) => {
         } else if (rows[0] !== undefined && rows[0].id !== undefined && rows[0].senha !== undefined) {
             bcrypt.compare(req.body.password, rows[0].senha, (err, result) => {
                 if (result) {
-                    req.body[0] = {id: rows[0].id};
+                    
+                    
+                    
+                    res.locals.id = rows[0].id;
+                    
+                    
+                    
                     next();
                 } else {
                     res.sendStatus(401);
